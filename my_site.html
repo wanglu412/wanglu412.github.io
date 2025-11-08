@@ -1,0 +1,51 @@
+<!DOCTYPE html> <!-- 声明：这是 HTML5 文档 -->
+<html lang="zh-CN"> <!-- 页面语言：中文 -->
+<head>
+  <meta charset="UTF-8"> <!-- 字符编码，避免中文乱码 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 视口设置：让移动端按设备宽度缩放，保证自适应 -->
+  <title>我的第一个网页</title> <!-- 浏览器标签上的标题 -->
+
+  <style>
+    /* 这里是 CSS：控制外观样式 */
+    :root { --brand: #ee7aaa; }           /* 自定义主题色变量 */
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Arial; background:#f7f7f8; color:#111; }
+    header { padding: 40px 20px; text-align: center; background: var(--brand); color: #fff; }
+    main { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+    .card { background:#fff; border-radius: 12px; padding:20px; box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+    .btn { display:inline-block; padding:10px 16px; border-radius: 8px; border:0; cursor:pointer; background:var(--brand); color:#fff; }
+    .btn:active { transform: translateY(1px); }
+    footer { text-align:center; color:#666; padding:24px 0; }
+  </style>
+</head>
+
+<body>
+  <!-- 这里是 HTML：页面结构与内容 -->
+  <header>
+    <h1>你好，网页世界！</h1>
+    <p>这是我的第一个合格网页 🎉</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>关于这个页面</h2>
+      <p>它用 <strong>HTML</strong> 搭结构、<strong>CSS</strong> 做样式、<strong>JavaScript</strong> 增强交互。</p>
+      <button class="btn" id="helloBtn">点我打个招呼</button>
+      <p id="msg" style="margin-top:12px;"></p>
+    </section>
+  </main>
+
+  <footer>© 2025 我的小站</footer>
+
+  <script>
+    // 这里是 JavaScript：给页面增加交互行为
+    const btn = document.getElementById('helloBtn');   // 通过 id 找到按钮
+    const msg = document.getElementById('msg');        // 找到显示消息的段落
+    btn.addEventListener('click', () => {               // 监听“点击”事件
+      const t = new Date().toLocaleTimeString();       // 取当前时间
+      msg.textContent = `你好！现在是 ${t}`;            // 修改页面文字
+    });
+  </script>
+</body>
+</html>
