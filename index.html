@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>❤写给我的好朋友❤</title>
+
+  <!-- 视口设置：移动端适配 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 引入外部样式 -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 弹窗：进入页面就显示 -->
+  <div class="popup-overlay" id="popup">
+    <div class="popup-box" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+      <p id="popupTitle">你知道吗，你有无数个优点 💖</p>
+      <button
+        class="popup-confirm"
+        id="confirmBtn"
+        aria-label="点击确定开始查看你的优点"
+      >
+        确定
+      </button>
+    </div>
+  </div>
+
+  <!-- 爱心区域：优点会排布在这里（内容由 JS 动态生成） -->
+  <main class="heart-wrapper" aria-label="写给好朋友的优点爱心">
+    <div class="heart-area" id="heartArea"></div>
+  </main>
+
+  <!-- 结尾白云语 -->
+  <div class="final-message" id="finalMessage" aria-live="polite">
+    谢谢你，我的朋友，你就是最好哒 💗
+  </div>
+
+  <!-- 引入外部脚本 -->
+  <script src="script.js" defer></script>
+</body>
+</html>
