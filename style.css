@@ -113,27 +113,93 @@ body {
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
 }
 
-
-/* JS 会添加 .show 类来开始动画 */
-.virtue.show {
-  animation-play-state: running;
+/* 暗角层，营造“焦距/灯光”感 */
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 100%);
+  opacity: 0;                 /* 初始不启用 */
+  transition: opacity 800ms ease;
+  z-index: 5;                 /* 在弹窗下方、心形上方都可调 */
+}
+.vignette.on { opacity: 1; }
+/* 弹窗 */
+.popup-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.4);
+  display:flex; justify-content:center; align-items:center; z-index:999; }
+.popup-box{
+  background:#fff; border:3px solid #000; border-radius:16px;
+  padding:24px 32px 32px; max-width:340px; text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.2); position:relative;
+}
+.popup-box p{ margin:0 0 12px; font-size:18px; line-height:1.6; }
+.subtle-hint{ display:block; margin-bottom:12px; color:#666; font-size:12px; }
+.popup-confirm{
+  display:inline-block; padding:10px 36px; border-radius:999px; border:2px solid #000;
+  background:#ffb6c1; font-size:16px; cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+  position:relative; top:4px;
+}
+.popup-confirm:hover,.popup-confirm:focus-visible{
+  transform:translateY(-1px); box-shadow:0 4px 10px rgba(0,0,0,.15); background:#ff9bb5; outline:none;
 }
 
-/* 优点标签出现动画：轻微向上浮现 + 放大 */
-@keyframes virtue-appear {
-  0% {
-    opacity: 0;
-    transform: scale(0.8) translateY(8px);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1.02) translateY(0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+/* 开场独白 + 聚光 */
+.prologue{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:8; }
+.prologue.show{ display:flex; }
+.prologue .typewriter{
+  max-width:min(90vw,780px); padding:18px 24px; border-radius:16px;
+  background:rgba(255,255,255,.88); box-shadow:0 12px 40px rgba(0,0,0,.18);
+  font-size:clamp(16px,2.4vw,26px); line-height:1.7; text-align:center; color:#222; backdrop-filter: blur(2px);
 }
+.spotlight{ position:absolute; width:70vmin; height:70vmin; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.25) 0%, rgba(255,255,255,0) 60%);
+  filter:blur(12px); animation:floatLight 6s ease-in-out infinite alternate; }
+@keyframes floatLight{ from{ transform:translateY(-10px); opacity:.9;} to{ transform:translateY(10px); opacity:.7;} }
+
+/* 爱心优点 */
+.heart-wrapper{ display:flex; justify-content:center; align-items:center; width:100vw; height:100vh; }
+.heart-area{ position:relative; width:70vw; height:90vh; }
+.virtue{
+  position:absolute; padding:5px 10px; border-radius:999px; border:1px solid #555;
+  background:rgba(255,255,255,.97); font-size:13px; white-space:nowrap;
+  text-shadow:0 0 2px rgba(0,0,0,.35); opacity:0; transform:scale(.8) translateY(8px);
+  animation:virtue-appear .7s ease-out forwards; animation-play-state:paused;
+}
+.virtue.show{ animation-play-state:running; }
+@keyframes virtue-appear{
+  0%{ opacity:0; transform:scale(.8) translateY(8px); }
+  60%{ opacity:1; transform:scale(1.02) translateY(0); }
+  100%{ opacity:1; transform:scale(1) translateY(0); }
+}
+
+/* 照片舞台（中央大图轮播） */
+.photo-stage{
+  position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:6;
+  pointer-events:none; /* 不挡交互 */
+}
+.photo-stage.show{ display:flex; }
+.photo-stage .photo{
+  position:absolute; width:min(76vmin,86vw); height:min(76vmin,86vw);
+  object-fit:cover; border-radius:20px;
+  box-shadow:0 18px 50px rgba(0,0,0,.25);
+  opacity:0; transform:scale(.96);
+  transition:opacity 700ms ease, transform 700ms ease;
+}
+.photo-stage .photo.active{ opacity:1; transform:scale(1); }
+
+/* 照片爱心马赛克（缩略图拼心） */
+.photo-mosaic{ position:fixed; inset:0; display:none; z-index:6; pointer-events:none; }
+.photo-mosaic.show{ display:block; }
+.photo-mosaic .thumb{
+  position:absolute; width:9vmin; height:9vmin; min-width:48px; min-height:48px;
+  object-fit:cover; border-radius:16px; border:2px solid rgba(255,255,255,.9);
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  transform:translate(-50%,-50%) scale(.2); opacity:0;
+  transition: left 900ms cubic-bezier(.2,.7,.2,1), top 900ms cubic-bezier(.2,.7,.2,1),
+              transform 900ms cubic-bezier(.2,.7,.2,1), opacity 600ms ease;
+}
+.photo-mosaic .thumb.in{ opacity:1; transform:translate(-50%,-50%) scale(1); }
 
 /* ===== 大结尾：白云 + 心跳动 ===== */
 .final-message {
