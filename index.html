@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>❤写给我的好朋友❤</title>
+  <!-- 在 <head> 标签内，添加 Google Fonts 引用 -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
 
   <!-- 视口设置：移动端适配 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,31 +14,53 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 弹窗：进入页面就显示 -->
+  <!-- ① 焦距与灯光：暗角层 -->
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ② 弹窗（保持不变） -->
   <div class="popup-overlay" id="popup">
     <div class="popup-box" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
       <p id="popupTitle">你知道吗，你有无数个优点 💖</p>
+
+      <!-- 可选提示：说明会播放音乐 -->
+      <small class="subtle-hint">点击“确定”后会播放一段轻柔背景音乐</small>
+
       <button
         class="popup-confirm"
         id="confirmBtn"
-        aria-label="点击确定开始查看你的优点"
+        aria-label="点击确定开始查看你的优点并播放背景音乐"
       >
         确定
       </button>
     </div>
   </div>
 
-  <!-- 爱心区域：优点会排布在这里（内容由 JS 动态生成） -->
+  <!-- ③ 开场独白层（打字机效果 + 聚光） -->
+  <section id="prologue" class="prologue" aria-live="polite" aria-atomic="true">
+    <div class="spotlight" aria-hidden="true"></div>
+    <div class="typewriter" id="prologueLine"></div>
+  </section>
+
+  <!-- ④ 爱心主体（保持原结构） -->
   <main class="heart-wrapper" aria-label="写给好朋友的优点爱心">
     <div class="heart-area" id="heartArea"></div>
   </main>
 
-  <!-- 结尾白云语 -->
+  <!-- ⑤ 结尾 -->
   <div class="final-message" id="finalMessage" aria-live="polite">
     谢谢你，我的朋友，你就是最好哒 💗
   </div>
 
-  <!-- 引入外部脚本 -->
+  
+  <!-- 图片舞台（中央大图轮播） -->
+  <section id="photoStage" class="photo-stage" aria-label="照片舞台" aria-live="polite"></section>
+
+  <!-- 照片爱心马赛克（缩略图拼成心形） -->
+  <section id="photoMosaic" class="photo-mosaic" aria-label="照片爱心"></section>
+
+  <!-- ⑥ 背景音乐（用 JS 控制播放） -->
+  <audio id="bgm" src="assets/music.mp3" preload="auto" loop></audio>
+
   <script src="script.js" defer></script>
 </body>
 </html>
