@@ -1,228 +1,226 @@
-// ========================
-// 1. 配置：优点文本 & 颜色
-// ========================
+/***********************
+ * 1) 配置区
+ ***********************/
 
-// 这里可以随便加删改，50~90 条都没问题
+// URL 上带 ?to=名字
+const RECIPIENT = new URLSearchParams(location.search).get("to") || "你";
+
+// 开场独白
+const prologueLines = [
+  `${RECIPIENT}，有些话，今天想慢慢告诉你。`,
+  `不是惊天动地的故事，却是日复一日的在意。`,
+  `接下来，我会把我看到的你，一点一点说出来。`
+];
+
+// 优点文本（可增删，50~90都行）
 const virtueTexts = [
-  "你很耐心",
-  "你很温柔",
-  "你很体贴",
-  "你很善良",
-  "你很健谈",
-  "你很真诚",
-  "你很会倾听",
-  "你充满活力",
-  "你很会照顾别人",
-  "你很有责任感",
-  "你很幽默",
-  "你值得被珍惜",
-  "你很勇敢",
-  "你很有创意",
-  "你很温暖",
-  "你很细心",
-  "你很自律",
-  "你很有想法",
-  "你很懂我",
-  "你总在为别人着想",
-  "你给人安全感",
-  "你很值得信赖",
-  "你笑起来超好看",
-  "你有自己的坚持",
-  "你很聪明",
-  "你也会温柔地对自己",
-  "你认真对待每一段关系",
-  "你不轻易放弃",
-  "你总能发现生活的小快乐",
-  "你会安慰人",
-  "你很真挚",
-  "你很可爱",
-  "你很可靠",
-  "你愿意为别人付出",
-  "你有治愈别人的能力",
-  "你总能把气氛变得轻松",
-  "你对世界保持好奇",
-  "你认真生活",
-  "你给人很多勇气",
-  "你是独一无二的存在",
-  "你比自己想象中更重要",
-  "和你在一起很安心",
-  "你值得被好好爱着",
-  "你本身就是一个很了不起的故事",
-  "你愿意相信别人",
-  "你能温柔地接住别人的情绪",
-  "你在慢慢学会爱自己",
-  "你比昨天又成长了一点",
-  "你一直在默默努力",
-  "你带来很多光",
-  "有你在，世界好像都变得好了点"
+  "你很耐心","你很温柔","你很体贴","你很善良","你很真诚","你很会倾听","你充满活力",
+  "你很会照顾别人","你很有责任感","你很幽默","你值得被珍惜","你很勇敢","你很有创意","你很温暖",
+  "你很细心","你很有想法","你很懂我","你总在为别人着想","你给人安全感","你很值得信赖",
+  "你笑起来超好看","你有自己的坚持","你很聪明","你也会温柔地对自己","你认真对待每一段关系",
+  "你不轻易放弃","你总能发现生活的小快乐","你会安慰人","你很真挚","你很可爱","你很可靠",
+  "你愿意为别人付出","你有治愈别人的能力","你总能把气氛变得轻松","你对世界保持好奇","你认真生活",
+  "你给人很多勇气","你是独一无二的存在","你比自己想象中更重要","和你在一起很安心","你值得被好好爱着",
+  "你本身就是一个很了不起的故事","你愿意相信别人","你能温柔地接住别人的情绪","你在慢慢学会爱自己",
+  "你比昨天又成长了一点","你一直在默默努力","你带来很多光","虽然有时爱逃避","虽然有时爱把事情闷在心里","但是你永远都是最好的你","你值得一切美好"
 ];
 
-// 高对比度颜色列表（深色系，和白色对比度强）
-const highContrastColors = [
-  // 深色系：保证对比度
-  "#111827", // 深灰蓝
-  "#1f2937",
-  "#0f172a",
-  "#1e293b",
-  "#4b5563",
+// 照片列表（把你的 10~20 张图片放到 assets 目录，填入文件名）
+const photoFiles = [
+  // 示例：把这些替换成你自己的图片名称
+  "p01.jpg","p02.jpg","p03.jpg","p04.jpg","p05.jpg",
+  "p06.jpg","p07.jpg","p08.jpg","p09.jpg","p10.jpg",
+  "p11.jpg","p12.jpg","p13.jpg","p14.jpg","p15.jpg",
+  "p16.jpg","p17.jpg","p18.jpg","p19.jpg","p20.jpg",
+  "p21.jpg"
+].map(n => `assets/${n}`);
 
-  // 鲜艳红橙
-  "#b91c1c", // 深红
-  "#ef4444", // 鲜红
-  "#f97316", // 橙色
-  "#ea580c", // 深橙
-
-  // 粉色 & 玫红
-  "#db2777", // 玫红
-  "#be185d",
-  "#ec4899",
-
-  // 亮紫 & 深紫
-  "#7c3aed",
-  "#6d28d9",
-  "#4c1d95",
-
-  // 亮蓝 & 深蓝
-  "#2563eb",
-  "#1d4ed8",
-  "#0f766e", // 蓝绿
-
-  // 绿色系
-  "#15803d",
-  "#16a34a",
-  "#22c55e",
-
-  // 金黄偏深（亮但还看得清）
-  "#ca8a04",
-  "#d97706"
+// 颜色（更鲜艳）
+const colors = [
+  "#7c3aed","#6d28d9","#4c1d95","#2563eb","#db2777",
+  "#b91c1c","#ef4444","#f97316","#ea580c","#db2777","#be185d","#ec4899",
+  "#7c3aed","#6d28d9","#4c1d95","#2563eb","#1d4ed8","#0f766e",
+  "#15803d","#16a34a","#22c55e","#ca8a04","#d97706"
 ];
+const pickColor = i => colors[i % colors.length];
 
+// 节奏控制
+const PER_ITEM_DELAY = 0.25;   // 每条优点的延迟（秒）
+const APPEAR_DURATION = 0.5;   // 优点动画时长（秒）
+const EXTRA_BUFFER = 0.6;      // 结尾前缓冲（秒）
 
-// 从颜色列表中轮流取色
-function pickColor(index) {
-  return highContrastColors[index % highContrastColors.length];
-}
+// 照片舞台轮播节奏（毫秒）
+const PHOTO_FADE_MS = 700;       // 淡入/淡出时长（与 CSS 对齐）
+const PHOTO_STAY_MS = 1100;      // 每张停留时间
+const PHOTO_TOTAL_PER = PHOTO_FADE_MS + PHOTO_STAY_MS; // 约 1.8s/张
 
-// ========================
-// 2. 使用心形公式生成坐标
-// ========================
-//
-// 经典心形参数方程：
-// x = 16 sin^3 t
-// y = 13cos t − 5cos 2t − 2cos 3t − cos 4t
-//
-// 我们：
-// - 在 0~2π 中按点数平均采样 t
-// - 计算 (x, y)
-// - 归一化到 [0, 100]% 范围
-// - 把 y 轴翻转以适配屏幕坐标
-// ========================
-
-function generateHeartPositions(numPoints) {
-  const points = [];
-
-  // 采样 t
-  for (let i = 0; i < numPoints; i++) {
-    const t = (Math.PI * 2 * i) / numPoints;
-    const x = 16 * Math.pow(Math.sin(t), 3);
-    const y =
-      13 * Math.cos(t) -
-      5 * Math.cos(2 * t) -
-      2 * Math.cos(3 * t) -
-      Math.cos(4 * t);
-
-    points.push({ x, y });
+/***********************
+ * 2) 工具函数
+ ***********************/
+function generateHeartPositions(numPoints){
+  // 心形参数方程
+  const pts = [];
+  for (let i=0;i<numPoints;i++){
+    const t = (Math.PI*2*i)/numPoints;
+    const x = 16*Math.pow(Math.sin(t),3);
+    const y = 13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+    pts.push({x,y});
   }
-
-  // 找出 x,y 的最大最小值，用来归一化
-  let minX = Infinity,
-    maxX = -Infinity,
-    minY = Infinity,
-    maxY = -Infinity;
-
-  points.forEach((p) => {
-    if (p.x < minX) minX = p.x;
-    if (p.x > maxX) maxX = p.x;
-    if (p.y < minY) minY = p.y;
-    if (p.y > maxY) maxY = p.y;
-  });
-
-  const rangeX = maxX - minX || 1;
-  const rangeY = maxY - minY || 1;
-
-  // 映射到 0~100%（稍微缩一点，避免贴边）
-  const margin = 8; // 8% 留白
-  const scaleX = 100 - margin * 2;
-  const scaleY = 100 - margin * 2;
-
-  return points.map((p) => {
-    const nx = ((p.x - minX) / rangeX) * scaleX + margin;
-    const ny = ((p.y - minY) / rangeY) * scaleY + margin;
-
-    // 屏幕坐标 y 轴向下，心形原公式 y 轴向上，所以这里反转一下
-    const screenY = 100 - ny;
-
-    return { x: nx, y: screenY };
+  // 归一化到 0~100%
+  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+  pts.forEach(p=>{minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y);});
+  const rx=maxX-minX||1, ry=maxY-minY||1;
+  const margin=8, sx=100-margin*2, sy=100-margin*2;
+  return pts.map(p=>{
+    const nx=((p.x-minX)/rx)*sx+margin;
+    const ny=((p.y-minY)/ry)*sy+margin;
+    return {x:nx, y:100-ny}; // 翻转 Y
   });
 }
 
-// ========================
-// 3. DOM 加载完成后初始化
-// ========================
+function typewriter(el, text, speed=38){
+  return new Promise(resolve=>{
+    el.textContent=""; let i=0;
+    const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const tick=()=>{
+      const step = reduced ? text.length : Math.max(1, Math.round(Math.random()*2)+1);
+      el.textContent += text.slice(i,i+step); i+=step;
+      if(i<text.length){ setTimeout(tick, reduced?0:(speed+Math.random()*40)); } else { resolve(); }
+    };
+    tick();
+  });
+}
 
-window.addEventListener("DOMContentLoaded", () => {
-  const popup = document.getElementById("popup");
-  const confirmBtn = document.getElementById("confirmBtn");
-  const heartArea = document.getElementById("heartArea");
-  const finalMessage = document.getElementById("finalMessage");
+function preload(src){
+  return new Promise((res,rej)=>{
+    const img = new Image(); img.onload=()=>res(img); img.onerror=rej; img.src=src;
+  });
+}
 
-  // 1）动态创建所有优点标签
-  const virtues = virtueTexts.map((text, index) => {
-    const el = document.createElement("div");
-    el.className = "virtue";
-    el.textContent = text;
+/***********************
+ * 3) 主流程
+ ***********************/
+window.addEventListener("DOMContentLoaded", async ()=>{
+  const popup=document.getElementById("popup");
+  const confirmBtn=document.getElementById("confirmBtn");
+  const heartArea=document.getElementById("heartArea");
+  const finalMessage=document.getElementById("finalMessage");
+  const prologue=document.getElementById("prologue");
+  const prologueLine=document.getElementById("prologueLine");
+  const vignette=document.querySelector(".vignette");
+  const bgm=document.getElementById("bgm");
 
-    const color = pickColor(index);
-    el.style.color = color;
-    el.style.borderColor = "#555555"; // 深灰固定边框
+  const photoStage=document.getElementById("photoStage");
+  const photoMosaic=document.getElementById("photoMosaic");
 
+  // 1) 动态创建优点
+  const virtues = virtueTexts.map((text,i)=>{
+    const el=document.createElement("div");
+    el.className="virtue"; el.textContent=text;
+    el.style.color=pickColor(i);
+    el.style.borderColor="#555";
     heartArea.appendChild(el);
     return el;
   });
 
-  // 2）生成与优点数量相同的心形坐标
-  const positions = generateHeartPositions(virtues.length);
-
-  // 3）设定每个优点的位置 + 动画延迟（更顺滑的控制）
-  virtues.forEach((el, index) => {
-    const pos = positions[index];
-    el.style.left = pos.x + "%";
-    el.style.top = pos.y + "%";
-
-    // 每条延迟 0.25s，你可以微调
-    const delay = index * 0.25;
-    el.style.animationDelay = `${delay}s`;
+  // 2) 优点布局到心形
+  const posVirtues = generateHeartPositions(virtues.length);
+  virtues.forEach((el,i)=>{
+    const p=posVirtues[i];
+    el.style.left=p.x+"%"; el.style.top=p.y+"%";
+    el.style.animationDelay = `${i*PER_ITEM_DELAY}s`;
   });
 
-  // 4）点击“确定”后，开始播放动画
-  confirmBtn.addEventListener("click", () => {
-    // 关闭弹窗
-    popup.style.display = "none";
+  // 3) 预加载照片
+  let loadedPhotos=[];
+  try{
+    loadedPhotos = await Promise.all(photoFiles.map(preload));
+  }catch(e){
+    // 有单张失败也没关系，忽略
+    loadedPhotos = loadedPhotos.filter(Boolean);
+  }
 
-    // 依次让标签播放动画（show 类启用 animation）
-    virtues.forEach((el) => {
-      el.classList.add("show");
-    });
+  // 4) 点击开始：音乐 + 暗角 + 独白 → 优点 → 照片舞台 → 照片爱心 → 结尾云朵
+  confirmBtn.addEventListener("click", async ()=>{
+    popup.style.display="none";
+    vignette.classList.add("on");
 
-    // 计算最后一个标签出现结束的时间，之后显示最终白云
-    const lastDelay = (virtues.length - 1) * 0.25;
-    const appearDuration = 0.7; // virtue-appear 动画时长（秒）
-    const extraBuffer = 0.8; // 再多等一小会儿
+    // 音乐（尊重减少动态）
+    try{
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      bgm.volume = reduced ? 0 : 0.35;
+      await bgm.play();
+    }catch(e){}
 
-    const totalTimeMs = (lastDelay + appearDuration + extraBuffer) * 1000;
+    // 开场独白
+    prologue.classList.add("show");
+    for(const line of prologueLines){
+      await typewriter(prologueLine, line);
+      await new Promise(r=>setTimeout(r,650));
+    }
+    prologue.classList.remove("show");
 
-    setTimeout(() => {
-      finalMessage.classList.add("show");
-    }, totalTimeMs);
+    // 优点逐条出现
+    virtues.forEach(el=>el.classList.add("show"));
+
+    // 优点全部结束的时间点
+    const totalVirtueMs = ((virtues.length-1)*PER_ITEM_DELAY + APPEAR_DURATION + EXTRA_BUFFER)*1000;
+
+    // 到点后展示“照片舞台”
+    setTimeout(async ()=>{
+      if(loadedPhotos.length===0){
+        // 没图就直接结尾
+        finalMessage.textContent = `${RECIPIENT}，谢谢你。和你在一起，世界真的变好了 💗`;
+        finalMessage.classList.add("show");
+        return;
+      }
+
+      // 中央大图轮播
+      photoStage.classList.add("show");
+      const stageImgs = loadedPhotos.map(img=>{
+        const el = document.createElement("img");
+        el.src = img.src; el.alt="相册照片"; el.className="photo";
+        photoStage.appendChild(el);
+        return el;
+      });
+
+      // 逐张播放
+      for(let i=0;i<stageImgs.length;i++){
+        stageImgs.forEach((el,idx)=>el.classList.toggle("active", idx===i));
+        await new Promise(r=>setTimeout(r, PHOTO_TOTAL_PER));
+      }
+
+      // 过渡到“照片爱心马赛克”
+      photoStage.classList.remove("show");
+      photoMosaic.classList.add("show");
+
+      // 生成与照片数量匹配的心形坐标
+      const posPhotos = generateHeartPositions(stageImgs.length);
+
+      // 把同一批 img 变成缩略图，定位到心形
+      stageImgs.forEach((el,i)=>{
+        // 先移动到 mosaic 容器
+        photoMosaic.appendChild(el);
+        el.classList.remove("photo");
+        el.classList.add("thumb");
+        // 先居中（由 CSS translate(-50%,-50%) 控制）
+        el.style.left = "50%";
+        el.style.top  = "50%";
+        // 再异步触发飞入动画
+        setTimeout(()=>{
+          el.style.left = posPhotos[i].x+"%";
+          el.style.top  = posPhotos[i].y+"%";
+          el.classList.add("in");
+        }, 40 + i*30); // 轻微错峰，层次更好看
+      });
+
+      // 等缩略图入位后，显示云朵结尾
+      const mosaicTotalMs = 1200 + stageImgs.length*30 + 600;
+      setTimeout(()=>{
+        finalMessage.textContent = `${RECIPIENT}，谢谢你！把点点滴滴放在一起，恰好是一颗心~`;
+        finalMessage.classList.add("show");
+      }, mosaicTotalMs);
+
+    }, totalVirtueMs);
   });
 });
