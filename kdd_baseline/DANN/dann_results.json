@@ -1,0 +1,64 @@
+{
+  "args": {
+    "dataset": "goodhiv_scaffold_covariate",
+    "datasets": null,
+    "data_root": "../data",
+    "hidden_dim": 128,
+    "num_layers": 3,
+    "gnn_type": "gin",
+    "dropout": 0.5,
+    "num_domains": 1,
+    "batch_size": 32,
+    "epochs": 3,
+    "lr": 0.001,
+    "weight_decay": 0.0005,
+    "domain_weight": 1.0,
+    "patience": 20,
+    "device": "cuda",
+    "num_workers": 0,
+    "seed": 42,
+    "save_dir": "dann_checkpoints",
+    "results_file": "dann_results.json",
+    "log_dir": "../log"
+  },
+  "timestamp": "2026-01-08 23:01:03",
+  "results": [
+    {
+      "history": {
+        "train_loss": [
+          0.177653263967214,
+          0.15538771210209384,
+          0.1521016990505352
+        ],
+        "train_class_loss": [
+          0.177653263967214,
+          0.15538771210209384,
+          0.1521016990505352
+        ],
+        "train_domain_loss": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "val_auc": [
+          0.6860311886647477,
+          0.7074519967672714,
+          0.618239436900084
+        ],
+        "test_auc": [
+          0.5475739376492625
+        ],
+        "alpha_values": [
+          0.0,
+          0.9311096668243408,
+          0.9974578619003296
+        ]
+      },
+      "best_val_auc": 0.7074519967672714,
+      "test_auc": 0.5475739376492625,
+      "test_accuracy": 0.9802823758519961,
+      "training_time": 38.713730335235596,
+      "dataset": "GOODHIV_Scaffold_Covariate"
+    }
+  ]
+}
